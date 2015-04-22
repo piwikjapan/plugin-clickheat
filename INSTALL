@@ -1,3 +1,8 @@
-Installation steps should be found on http://www.dugwood.com/clickheat/installation.html
+Install it via Piwik Marketplace.
 
-La description de l'installation devrait se trouver sur http://www.dugwood.fr/clickheat/installation.html
+This plugin installer will make directories:
+
+    yourpiwik/tmp/cache/clickheat/cache
+    yourpiwik/tmp/cache/clickheat/logs.
+
+This plugin uses a different tracker. Please click on the link "JavaScript" and put the special Javascript codes into your website.

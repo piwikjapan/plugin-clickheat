@@ -5,7 +5,7 @@
     "theme": false,
     "keywords": ["clickheat", "heatmap", "dugwood", "piwikjapan", "yamachan"],
     "require": {
-        "piwik": ">=2.12.1"
+        "piwik": ">=2.11.1"
     },
     "license": "GPLv3 or later",
     "authors": [
@@ -15,7 +15,7 @@
             "homepage": "http://www.dugwood.com/clickheat/index.html"
         },
         {
-            "name": "yamachan(a member of PiwikJapan)",
+            "name": "yamachan (a member of PiwikJapan)",
             "email": "yamachan@piwikjapan.org",
             "homepage": "http://www.piwikjapan.org/"
         }
