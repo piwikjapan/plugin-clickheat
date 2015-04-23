@@ -30,6 +30,16 @@ __Where is the coordinate information from the browser ?__
 
 ClickHeat plugin uses text files to record the coordinate data of each browser in directory: yourpiwik/tmp/cache/clickheat/logs.
 
+__What is "click.php returned a status code 403" ?__
+
+403 errors are almost always caused by issues where you're trying to access something that you don't have access to.
+
+Special Javascript, which you had set for ClickHeat, executes the ClickHeat tracker (yourpiwik/plugins/ClickHeat/libs/click.php) look-alike the Piwik tracker (yourpiwik/piwik.php).
+
+Therefore, you must authorize the ClickHeat tracker just as the Piwik tracker. 
+
+This link helps you: [Apache 403 Forbidden Error and Solution](http://www.cyberciti.biz/faq/apache-403-forbidden-error-and-solution/)
+
 __Does it withstands high traffics ?__
 
 This plugin uses minimal text to record data and file based logging. And when click.php is called from a special Javascript for cgi, just append text on end of the each file. And when you analyze the click data and make a heatmap, plugin will create cached heatmap as png image file. 
@@ -40,18 +50,19 @@ Please see the link [Performance and optimization](http://www.labsmedia.com/clic
 
 __New click data were added, but not updated heatmap. Why ?__
 
-Plugin places heatmap images in the cache directory: yourpiwik/tmp/cache/clickheat/cache. Therefore when you suddenly met with such probrem, you can delete cache files (__do not delete cache directory__).
+Plugin places heatmap images in the cache directory: yourpiwik/tmp/cache/clickheat/cache. Therefore when you suddenly met with such probrem, you can delete cache files, but __do not delete cache directory__.
 
 __Showed a heatmap, but not overlay a heatmap to the target web page. Why ?__
 
 Check that your website does not set the HTTP header __X-FRAME-OPTIONS__ to __SAMEORIGIN__ as this will prevent this plugin from iframing your website for the heatmap report. Please see [Page Overlay Troubleshooting](http://piwik.org/docs/page-overlay/#page-overlay-troubleshooting), that is same problem.
 
 ## Changelog
+
 * 0.1.0 First beta
+* 0.1.2 to append faq
 
 ## License
 GPL v3 or later
 
 ## Support
 Please direct any feedback to [yamachan@piwikjapan.org](mailto:yamachan@piwikjapan.org).
-
