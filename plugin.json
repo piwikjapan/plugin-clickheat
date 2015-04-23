@@ -1,7 +1,7 @@
 {
-    "name": "ClickHeart",
+    "name": "ClickHeat",
     "homepage": "http://piwikjapan.org",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "ClickHeat is a visual heatmap of clicks on a HTML page, showing hot and cold click zones. This plugin based on <a href=\"https://github.com/dugwood/clickheat\">Dugwood's ClickHeat version 1.14</a>. It is an OpenSource software, released under GPL licence, and free of charge.",
     "theme": false,
     "keywords": ["clickheat", "heatmap", "dugwood", "piwikjapan", "yamachan"],
