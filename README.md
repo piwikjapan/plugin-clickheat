@@ -1,7 +1,9 @@
 # Piwik ClickHeat Plugin
 
 ## Description
-ClickHeat is a visual heatmap of clicks on a HTML page, showing hot and cold click zones. This plugin based on [Dugwood's ClickHeat version 1.14](https://github.com/dugwood/clickheat). It is an OpenSource software, released under GPL licence, and free of charge.
+ClickHeat is a visual heatmap of clicks on a HTML page, showing hot and cold click zones. This plugin based on [Dugwood's ClickHeat version 1.14](https://github.com/dugwood/clickheat). It is an OpenSource software, released under GPL licence, and free of charge. 
+
+__Plugin not consider the IIS.__ Sorry.
 
 ## Installation
 Install it via Piwik Marketplace.
@@ -40,6 +42,10 @@ Therefore, you must authorize the ClickHeat tracker just as the Piwik tracker.
 
 This link helps you: [Apache 403 Forbidden Error and Solution](http://www.cyberciti.biz/faq/apache-403-forbidden-error-and-solution/)
 
+__After installing the plugin, Piwik Administration area shows "page not found 404 error".__
+
+This plugin doesn't consider the IIS. Sorry. And please delete the ClickHeat plugin (yourpiwik/plugins/ClickHeat) manually via FTP or Explorer.
+
 __Does it withstands high traffics ?__
 
 This plugin uses minimal text to record data and file based logging. And when click.php is called from a special Javascript for cgi, just append text on end of the each file. And when you analyze the click data and make a heatmap, plugin will create cached heatmap as png image file. 
@@ -60,6 +66,7 @@ Check that your website does not set the HTTP header __X-FRAME-OPTIONS__ to __SA
 
 * 0.1.0 First beta
 * 0.1.2 to append faq
+* 0.1.3 to append faq
 
 ## License
 GPL v3 or later
