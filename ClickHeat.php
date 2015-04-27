@@ -27,5 +27,9 @@ class ClickHeat extends \Piwik\Plugin
 		{
 			mkdir($dir.'cache', 0777, true);
 		}
+		$htaccess = PIWIK_INCLUDE_PATH.'/plugins/ClickHeat/dot_htaccess';
+		if (file_exists($htaccess)) {
+			copy($htaccess, PIWIK_INCLUDE_PATH.'/plugins/ClickHeat/.htaccess');
+		}
 	}
 }

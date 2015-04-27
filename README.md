@@ -34,7 +34,7 @@ ClickHeat plugin uses text files to record the coordinate data of each browser i
 
 __What is "click.php returned a status code 403" ?__
 
-You have to perform the upgrade immediately to version 0.1.4. I forgot to put .htaccess.
+You have to perform the upgrade immediately to version 0.1.5. I forgot to put .htaccess.
 
 __After installing the plugin, Piwik Administration area shows "page not found 404 error".__
 
@@ -61,7 +61,7 @@ Check that your website does not set the HTTP header __X-FRAME-OPTIONS__ to __SA
 * 0.1.0 First beta
 * 0.1.2 to append faq
 * 0.1.3 to append faq
-* 0.1.4 to add .htaccess
+* 0.1.5 to add .htaccess
 
 ## License
 GPL v3 or later
