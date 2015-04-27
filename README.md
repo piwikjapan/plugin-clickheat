@@ -3,7 +3,7 @@
 ## Description
 ClickHeat is a visual heatmap of clicks on a HTML page, showing hot and cold click zones. This plugin based on [Dugwood's ClickHeat version 1.14](https://github.com/dugwood/clickheat). It is an OpenSource software, released under GPL licence, and free of charge. 
 
-__Plugin not consider the IIS.__ Sorry.
+__Plugin not consider the IIS.__ Sorry. We are waiting patches for IIS.
 
 ## Installation
 Install it via Piwik Marketplace.
@@ -34,17 +34,11 @@ ClickHeat plugin uses text files to record the coordinate data of each browser i
 
 __What is "click.php returned a status code 403" ?__
 
-403 errors are almost always caused by issues where you're trying to access something that you don't have access to.
-
-Special Javascript, which you had set for ClickHeat, executes the ClickHeat tracker (yourpiwik/plugins/ClickHeat/libs/click.php) look-alike the Piwik tracker (yourpiwik/piwik.php).
-
-Therefore, you must authorize the ClickHeat tracker just as the Piwik tracker. 
-
-This link helps you: [Apache 403 Forbidden Error and Solution](http://www.cyberciti.biz/faq/apache-403-forbidden-error-and-solution/)
+You have to perform the upgrade immediately to version 0.1.4. I forgot to put .htaccess.
 
 __After installing the plugin, Piwik Administration area shows "page not found 404 error".__
 
-This plugin doesn't consider the IIS. Sorry. And please delete the ClickHeat plugin (yourpiwik/plugins/ClickHeat) manually via FTP or Explorer.
+This plugin doesn't consider the IIS. Sorry. And please delete the ClickHeat plugin (yourpiwik/plugins/ClickHeat) manually via FTP or Explorer. We are waiting patches for IIS.
 
 __Does it withstands high traffics ?__
 
@@ -67,6 +61,7 @@ Check that your website does not set the HTTP header __X-FRAME-OPTIONS__ to __SA
 * 0.1.0 First beta
 * 0.1.2 to append faq
 * 0.1.3 to append faq
+* 0.1.4 to add .htaccess
 
 ## License
 GPL v3 or later

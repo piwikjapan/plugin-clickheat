@@ -1,8 +1,8 @@
 {
     "name": "ClickHeat",
     "homepage": "http://piwikjapan.org",
-    "version": "0.1.3",
-    "description": "ClickHeat is a visual heatmap of clicks on a HTML page, showing hot and cold click zones. This plugin based on Dugwood's ClickHeat version 1.14. Plugin not consider the IIS. Sorry.",
+    "version": "0.1.4",
+    "description": "ClickHeat is a visual heatmap of clicks on a HTML page. This plugin based on Dugwood's ClickHeat version 1.14. Plugin not consider IIS. Sorry.",
     "theme": false,
     "keywords": ["clickheat", "heatmap", "dugwood", "piwikjapan", "yamachan"],
     "require": {
