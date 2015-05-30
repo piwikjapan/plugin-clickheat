@@ -109,8 +109,7 @@ if ($clickheatConf['filesize'] !== 0)
 	}
 }
 /* Logging the click */
-$f = fopen($clickheatConf['logPath'].$final.'/'.date('Y-m-d').'.log', 'a');
-if (!is_resource($f))
+if (!($f = @fopen($clickheatConf['logPath'].$final.'/'.date('Y-m-d').'.log', 'a')))
 {
 	/* Can't open the log, let's try to create the directory */
 	if (!is_dir(dirname($clickheatConf['logPath'])))
