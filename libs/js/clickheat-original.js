@@ -28,11 +28,11 @@ function addEvtListener(obj, evtName, f)
 	{
 		if (obj)
 		{
-			obj.addEventListener(evtName, function() {setTimeout(f, 20)}, false);
+			obj.addEventListener(evtName, f, false);
 		}
 		else
 		{
-			addEventListener(evtName, function() {setTimeout(f, 20)}, false);
+			addEventListener(evtName, f, false);
 		}
 	}
 	/* IE */
@@ -40,11 +40,11 @@ function addEvtListener(obj, evtName, f)
 	{
 		if (obj)
 		{
-			obj.attachEvent('on' + evtName, function() {setTimeout(f, 20)});
+			obj.attachEvent('on' + evtName, f);
 		}
 		else
 		{
-			attachEvent('on' + evtName, function() {setTimeout(f, 20)});
+			attachEvent('on' + evtName, f);
 		}
 	}
 }
