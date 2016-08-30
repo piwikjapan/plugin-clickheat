@@ -1,23 +1,35 @@
-<?php $clickheatConf = array (
-  'logPath' => PIWIK_INCLUDE_PATH.'/tmp/cache/clickheat/logs/',
-  'cachePath' => PIWIK_INCLUDE_PATH.'/tmp/cache/clickheat/cache/',
-  'referers' => false,
-  'groups' => false,
-  'filesize' => 0,
-  'adminLogin' => '',
-  'adminPass' => '',
-  'viewerLogin' => '',
-  'viewerPass' => '',
-  'memory' => 50,
-  'step' => 5,
-  'dot' => 19,
-  'flush' => 40,
-  'start' => 'm',
-  'palette' => false,
-  'heatmap' => true,
-  'hideIframes' => true,
-  'hideFlashes' => true,
-  'yesterday' => false,
-  'alpha' => 80,
-  'version' => '0.1.0',
-); ?>
+<?php
+
+/**
+ * ClickHeat - Clicks' heatmap
+ *
+ * @link http://www.dugwood.com/clickheat/index.html
+ * @license http://www.gnu.org/licenses/gpl-3.0.html Gpl v3 or later
+ * @version $Id$
+ *
+ * @package Piwik\Plugins\ClickHeat
+ */
+
+namespace Piwik\Plugins\ClickHeat;
+use Piwik\Config;
+
+class ClickHeat extends \Piwik\Plugin
+{
+	function install()
+	{
+		/** Create main cache paths */
+		$dir = PIWIK_INCLUDE_PATH.'/tmp/cache/clickheat/';
+		if (!is_dir($dir.'logs'))
+		{
+			mkdir($dir.'logs', 0777, true);
+		}
+		if (!is_dir($dir.'cache'))
+		{
+			mkdir($dir.'cache', 0777, true);
+		}
+		$htaccess = PIWIK_INCLUDE_PATH.'/plugins/ClickHeat/dot_htaccess';
+		if (file_exists($htaccess)) {
+			copy($htaccess, PIWIK_INCLUDE_PATH.'/plugins/ClickHeat/.htaccess');
+		}
+	}
+}

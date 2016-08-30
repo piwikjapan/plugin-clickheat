@@ -56,15 +56,29 @@ __Showed a heatmap, but not overlay a heatmap to the target web page. Why ?__
 
 Check that your website does not set the HTTP header __X-FRAME-OPTIONS__ to __SAMEORIGIN__ as this will prevent this plugin from iframing your website for the heatmap report. Please see [Page Overlay Troubleshooting](http://piwik.org/docs/page-overlay/#page-overlay-troubleshooting), that is same problem.
 
+__How do I enable logging ?__
+
+Logging prepared for click.php. To debug it further please enable tracker debug mode in config.ini.php:
+
+```
+[Tracker]
+debug=1
+```
+You can see the log in yourpiwik/tmp/logs/piwik.log.
+
 ## Changelog
 
 * 0.1.0 First beta
 * 0.1.2 to append faq
 * 0.1.3 to append faq
 * 0.1.5 to add .htaccess
+* 0.1.6
+    * security update
+    * rename clickheat.php to clickheat_config.php (Windows mixes up ClickHeat.php with clickheat.php)
 
 ## License
 GPL v3 or later
 
 ## Support
 Please direct any feedback to [yamachan@piwikjapan.org](mailto:yamachan@piwikjapan.org).
+ё
