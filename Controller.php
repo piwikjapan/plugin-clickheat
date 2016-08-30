@@ -16,12 +16,14 @@ use Piwik\Translate;
 use Piwik\Piwik;
 use Piwik\Common;
 use Piwik\View;
-
+ёё
 class Controller extends \Piwik\Plugin\Controller
 {
 
 	public function init()
 	{
+		// if you are not valid user, force login.
+		Piwik::checkUserIsNotAnonymous();
 		$__languages = array('bg', 'cz', 'de', 'en', 'es', 'fr', 'hu', 'id', 'it', 'ja', 'nl', 'pl', 'pt', 'ro', 'ru', 'sr', 'tr', 'uk', 'zh');
 
 		if (isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'] !== '')
@@ -47,7 +49,7 @@ class Controller extends \Piwik\Plugin\Controller
 		define('CLICKHEAT_PATH', $dirName.'/plugins/ClickHeat/libs/');
 		define('CLICKHEAT_INDEX_PATH', 'index.php?module=ClickHeat&');
 		define('CLICKHEAT_ROOT', PIWIK_INCLUDE_PATH.'/plugins/ClickHeat/libs/');
-		define('CLICKHEAT_CONFIG', PIWIK_INCLUDE_PATH.'/plugins/ClickHeat/clickheat.php');	
+		define('CLICKHEAT_CONFIG', PIWIK_INCLUDE_PATH.'/plugins/ClickHeat/clickheat_config.php');
 		define('IS_PIWIK_MODULE', true);
 
 		if (Piwik::hasUserSuperUserAccess())
@@ -87,6 +89,8 @@ class Controller extends \Piwik\Plugin\Controller
 	 */
 	public function view()
 	{
+		// if you are not valid user, force login.
+		Piwik::checkUserIsNotAnonymous();
 		/** List of available groups */
 		$groups = array();
 		$conf = self::conf();
@@ -208,6 +212,8 @@ class Controller extends \Piwik\Plugin\Controller
 
 	public function iframe()
 	{
+		// if you are not valid user, force login.
+		Piwik::checkUserIsNotAnonymous();
 		$group = isset($_GET['group']) ? str_replace('/', '', $_GET['group']) : '';
 		$conf = self::conf();
 		if (is_dir($conf['logPath'].$group))
@@ -228,6 +234,8 @@ class Controller extends \Piwik\Plugin\Controller
 
 	public function javascript()
 	{
+		// if you are not valid user, force login.
+		Piwik::checkUserIsNotAnonymous();
 		foreach(array('', '_GROUP', '_GROUP0', '_GROUP1', '_GROUP2', '_GROUP3', '_DEBUG', '_QUOTA', '_IMAGE', '_SHORT', '_PASTE') as $value) {
 			define("LANG_JAVASCRIPT$value", Piwik::Translate("ClickHeat_LANG_JAVASCRIPT$value"));
 		}
@@ -236,16 +244,22 @@ class Controller extends \Piwik\Plugin\Controller
 
 	public function layout()
 	{
+		// if you are not valid user, force login.
+		Piwik::checkUserIsNotAnonymous();
 		include (CLICKHEAT_ROOT.'layout.php');
 	}
 
 	public function generate()
 	{
+		// if you are not valid user, force login.
+		Piwik::checkUserIsNotAnonymous();
 		include (CLICKHEAT_ROOT.'generate.php');
 	}
 
 	public function png()
 	{
+		// if you are not valid user, force login.
+		Piwik::checkUserIsNotAnonymous();
 		$conf = self::conf();
 		$imagePath = $conf['cachePath'].(isset($_GET['file']) ? str_replace('/', '', $_GET['file']) : '**unknown**');
 
@@ -262,6 +276,8 @@ class Controller extends \Piwik\Plugin\Controller
 
 	public function layoutupdate()
 	{
+		// if you are not valid user, force login.
+		Piwik::checkUserIsNotAnonymous();
 		$group = isset($_GET['group']) ? str_replace('/', '', $_GET['group']) : '';
 		$url = isset($_GET['url']) ? $_GET['url'] : '';
 		if (strpos($url, 'http') !== 0)
@@ -301,6 +317,8 @@ class Controller extends \Piwik\Plugin\Controller
 
 	public function cleaner()
 	{
+		// if you are not valid user, force login.
+		Piwik::checkUserIsNotAnonymous();
 		include (CLICKHEAT_ROOT.'cleaner.php');
 	}
 

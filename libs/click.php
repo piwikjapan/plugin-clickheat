@@ -14,8 +14,19 @@
 use Piwik\Common;
 use Piwik\IP;
 use Piwik\Network\IPUtils;
+use Piwik\Tracker\TrackerConfig;
 
 /* First of all, check if we are inside PhpMyVisites */
+
+function printDebug($message)
+{
+	echo $message;
+	if (defined('PIWIK_INCLUDE_PATH')) {
+	    Common::printDebug($message);
+	}	
+	return;
+}
+
 if (strpos(str_replace('\\', '/', getcwd()), 'plugins/ClickHeat/libs') !== false)
 {
 	define('PIWIK_DOCUMENT_ROOT', str_replace('/plugins/ClickHeat/libs', '', str_replace('\\', '/', getcwd())));
@@ -25,8 +36,34 @@ if (strpos(str_replace('\\', '/', getcwd()), 'plugins/ClickHeat/libs') !== false
 	define('CLICKHEAT_CONFIG', CLICKHEAT_ROOT .'/clickheat.php');
 	require_once PIWIK_INCLUDE_PATH . '/core/bootstrap.php';
 	@ignore_user_abort(true);
+	require_once PIWIK_INCLUDE_PATH . '/core/Plugin/Controller.php';
+	require_once PIWIK_INCLUDE_PATH . '/core/Exception/NotYetInstalledException.php';
+	require_once PIWIK_INCLUDE_PATH . '/core/Plugin/ControllerAdmin.php';
+	require_once PIWIK_INCLUDE_PATH . '/core/Singleton.php';
+	require_once PIWIK_INCLUDE_PATH . '/core/Plugin/Manager.php';
+	require_once PIWIK_INCLUDE_PATH . '/core/Plugin.php';
 	require_once PIWIK_INCLUDE_PATH . '/core/Common.php';
+	require_once PIWIK_INCLUDE_PATH . '/core/Piwik.php';
 	require_once PIWIK_INCLUDE_PATH . '/core/IP.php';
+	require_once PIWIK_INCLUDE_PATH . '/core/UrlHelper.php';
+	require_once PIWIK_INCLUDE_PATH . '/core/Url.php';
+	require_once PIWIK_INCLUDE_PATH . '/core/SettingsPiwik.php';
+	require_once PIWIK_INCLUDE_PATH . '/core/SettingsServer.php';
+	require_once PIWIK_INCLUDE_PATH . '/core/Tracker.php';
+	require_once PIWIK_INCLUDE_PATH . '/core/Config.php';
+	require_once PIWIK_INCLUDE_PATH . '/core/Translate.php';
+	require_once PIWIK_INCLUDE_PATH . '/core/Tracker/Cache.php';
+	require_once PIWIK_INCLUDE_PATH . '/core/Tracker/Request.php';
+	require_once PIWIK_INCLUDE_PATH . '/core/Tracker/TrackerConfig.php';
+	require_once PIWIK_INCLUDE_PATH . '/core/Cookie.php';
+	$environment = new \Piwik\Application\Environment('tracker');
+	try {
+	    $environment->init();
+	} catch(\Piwik\Exception\NotYetInstalledException $e) {
+	    die($e->getMessage());
+	}
+	$debug = (bool) TrackerConfig::getConfigValue('debug');
+	$PIWIK_TRACKER_DEBUG = $debug; // to enable debug log
 }
 else
 {
@@ -41,7 +78,7 @@ include CLICKHEAT_CONFIG;
 /* Check parameters */
 if (!isset($clickheatConf) || !isset($_GET['x']) || !isset($_GET['y']) || !isset($_GET['w']) || !isset($_GET['g']) || !isset($_GET['s']) || !isset($_GET['b']) || !isset($_GET['c']))
 {
-	exit('Parameters or config error');
+	printDebug('ClickHeat: Parameters or config error');
 }
 
 /* Check referers */
@@ -49,12 +86,12 @@ if (is_array($clickheatConf['referers']))
 {
 	if (!isset($_SERVER['HTTP_REFERER']))
 	{
-		exit('No domain in referer');
+		printDebug('ClickHeat: No domain in referer');
 	}
 	$referer = parse_url($_SERVER['HTTP_REFERER']);
 	if (!in_array($referer['host'], $clickheatConf['referers']))
 	{
-		exit('Forbidden domain ('.$referer['host'].'), change or remove security settings in the config panel to allow this one');
+		printDebug('ClickHeat: Forbidden domain ('.$referer['host'].'), change or remove security settings in the /config panel to allow this one');
 	}
 }
 
@@ -84,20 +121,20 @@ $site = cleanStrings($_GET['s']);
 $group = cleanStrings($_GET['g']);
 if ($group === '')
 {
-	exit('No group specified (clickHeatGroup empty)');
+	printDebug('ClickHeat: No group specified (clickHeatGroup empty)');
 }
 /* Check group */
 if (is_array($clickheatConf['groups']))
 {
 	if (!in_array($group, $clickheatConf['groups']))
 	{
-		exit('Forbidden group ('.$group.'), change or remove security settings in the config panel to allow this one');
+		printDebug('ClickHeat: Forbidden group ('.$group.'), change or remove security settings in the config panel to allow this one');
 	}
 }
 $browser = preg_replace('/[^a-z]+/', '', strtolower($_GET['b']));
 if ($browser === '')
 {
-	exit('Browser empty');
+	printDebug('ClickHeat: Browser empty');
 }
 $final = ltrim($site.','.$group, ',');
 /* Limit file size */
@@ -105,25 +142,26 @@ if ($clickheatConf['filesize'] !== 0)
 {
 	if (file_exists($clickheatConf['logPath'].$final.'/'.date('Y-m-d').'.log') && filesize($clickheatConf['logPath'].$final.'/'.date('Y-m-d').'.log') > $clickheatConf['filesize'])
 	{
-		exit('Filesize reached limit');
+		printDebug('ClickHeat: Filesize reached limit');
 	}
 }
 /* Logging the click */
-if (!($f = @fopen($clickheatConf['logPath'].$final.'/'.date('Y-m-d').'.log', 'a')))
+$f = fopen($clickheatConf['logPath'].$final.'/'.date('Y-m-d').'.log', 'a');
+if (!is_resource($f))
 {
 	/* Can't open the log, let's try to create the directory */
 	if (!is_dir(dirname($clickheatConf['logPath'])))
 	{
 		if (!mkdir(dirname($clickheatConf['logPath'])))
 		{
-			exit('Cannot create log directory: '.$clickheatConf['logPath']);
+			printDebug('ClickHeat: Cannot create log directory: '.$clickheatConf['logPath']);
 		}
 	}
 	if (!is_dir($clickheatConf['logPath'].$final))
 	{
 		if (!mkdir($clickheatConf['logPath'].$final))
 		{
-			exit('Cannot create log directory: '.$clickheatConf['logPath'].$final);
+			printDebug('ClickHeat: Cannot create log directory: '.$clickheatConf['logPath'].$final);
 		}
 		if (isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER'] !== '')
 		{
@@ -139,7 +177,7 @@ if (is_resource($f))
 	$logMe = true;
 	if (isset($_COOKIE['clickheat-admin']))
 	{
-		echo 'OK, but click not logged as you selected it in the admin panel ("Log my clicks/Enregistrer mes clics")';
+		printDebug("ClickHeat: OK, but click not logged as you selected it in the admin panel (\"Log my clicks/Enregistrer mes clics\")");
 		$logMe = false;
 	}
 	elseif (IS_PIWIK_MODULE === true)
@@ -153,7 +191,7 @@ if (is_resource($f))
 				$ip = IPUtils::stringToBinaryIP(\Piwik\Network\IP::fromStringIP(IP::getIpFromHeader()));
 				if (isIpInRange($ip, $content['excluded_ips']) === true)
 				{
-					echo 'OK, but click not logged as you prevent this IP to be tracked in Piwik\'s configuration';
+					printDebug('OK, but click not logged as you prevent this IP to be tracked in Piwik\'s configuration');
 					$logMe = false;
 				}
 			}
@@ -161,12 +199,12 @@ if (is_resource($f))
 	}
 	if ($logMe === true)
 	{
-		echo 'OK';
+		printDebug('ClickHeat: OK');
 		fputs($f, ((int) $_GET['x']).'|'.((int) $_GET['y']).'|'.((int) $_GET['w']).'|'.$browser.'|'.((int) $_GET['c'])."\n");
 	}
 	fclose($f);
 }
 else
 {
-	echo 'KO, file not writable';
+	printDebug('ClickHeat: KO, file not writable');
 }
