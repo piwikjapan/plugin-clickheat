@@ -75,10 +75,10 @@ You can see the log in yourpiwik/tmp/logs/piwik.log.
 * 0.1.6
     * security update
     * rename clickheat.php to clickheat_config.php (Windows mixes up ClickHeat.php with clickheat.php)
+* 0.1.7 fixed bug
 
 ## License
 GPL v3 or later
 
 ## Support
 Please direct any feedback to [yamachan@piwikjapan.org](mailto:yamachan@piwikjapan.org).
-ё

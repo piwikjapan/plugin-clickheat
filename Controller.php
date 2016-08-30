@@ -16,7 +16,6 @@ use Piwik\Translate;
 use Piwik\Piwik;
 use Piwik\Common;
 use Piwik\View;
-ёё
 class Controller extends \Piwik\Plugin\Controller
 {
 
