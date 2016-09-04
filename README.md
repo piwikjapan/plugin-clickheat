@@ -76,6 +76,7 @@ You can see the log in yourpiwik/tmp/logs/piwik.log.
     * security update
     * rename clickheat.php to clickheat_config.php (Windows mixes up ClickHeat.php with clickheat.php)
 * 0.1.7 fixed bug
+* 0.1.8 fixed bug
 
 ## License
 GPL v3 or later

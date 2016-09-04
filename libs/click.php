@@ -33,7 +33,7 @@ if (strpos(str_replace('\\', '/', getcwd()), 'plugins/ClickHeat/libs') !== false
 	define('PIWIK_INCLUDE_PATH', PIWIK_DOCUMENT_ROOT);
 	define('CLICKHEAT_ROOT', PIWIK_DOCUMENT_ROOT.'/plugins/ClickHeat');
 	define('IS_PIWIK_MODULE', true);
-	define('CLICKHEAT_CONFIG', CLICKHEAT_ROOT .'/clickheat.php');
+	define('CLICKHEAT_CONFIG', CLICKHEAT_ROOT .'/clickheat_config.php');
 	require_once PIWIK_INCLUDE_PATH . '/core/bootstrap.php';
 	@ignore_user_abort(true);
 	require_once PIWIK_INCLUDE_PATH . '/core/Plugin/Controller.php';
